@@ -4,16 +4,14 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                // Replace with your actual repo URL
-                git 'https://your-git-repo-link.git'
+                git branch: 'main', url: 'https://github.com/deepakgitproject/wordpressjenkins.git'
             }
         }
 
         stage('Build & Deploy') {
             steps {
                 script {
-                    // Stop containers (ignore errors), pull new images, then bring up services
-                    sh 'docker-compose down || true'
+                    sh 'docker-compose down || echo "No containers to stop"'
                     sh 'docker-compose pull'
                     sh 'docker-compose up -d'
                 }
@@ -23,8 +21,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished'
+            echo '🚀 Deployment Pipeline Completed!'
         }
     }
 }
-
